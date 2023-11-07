@@ -1,0 +1,72 @@
+body {
+    font-family: Arial, sans-serif; 
+}
+
+.container { 
+    width: 640px;
+    align-content: center; 
+    box-shadow: 10px -10px 25px black;
+    padding: 15px 50px;
+    border: 5px;
+    border-radius: 10px; 
+    margin: 50px 570px;
+    background: #fcfcfc;
+}
+
+.kanji {
+    height: 240px;
+    width: 200px;
+    float: left;
+    font-size: 150px;
+    background-color: #f5f5f5;
+    margin: 0px 0px;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 12px -12px 25px black;
+}
+
+.options {
+    float: left;
+    padding: 15px 15px;
+}
+
+.options button {
+    display: flex;
+    margin: 10px 0px;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 5s;
+    box-shadow: 5px -5px 5px black; 
+}
+
+.kanjiList ul {
+    width: 270px;
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    font-size: 30px;
+}
+
+.kanjiList li {
+    margin: 7px;
+    border-radius: 10px; 
+    background-color: #f5f5f5;
+    box-shadow: 5px -5px 8px black;
+    padding: 5px 5px;
+    cursor: pointer;
+}
+
+.kanjiList li.active {
+    font-weight: bold;
+    background-color: #61c461; 
+}
+
+.kanjiList li.wrong {
+    font-weight: bold;
+    background-color: #c45f5f
+}

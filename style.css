@@ -29,11 +29,75 @@ body {
     align-items: center;
 }
 
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 15px;
+    gap: 15px;
+}
+
+.difficulty {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.difficulty select {
+    padding: 8px 12px;
+    font-size: 14px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.theme-btn {
+    font-size: 20px;
+    padding: 8px 12px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.theme-btn:hover {
+    background: rgba(0,0,0,0.1);
+}
+
+body.dark {
+    background-color: #1a1a2e;
+}
+
+body.dark .container {
+    background: #16213e;
+}
+
+body.dark .kanji,
+body.dark .options button,
+body.dark .kanjiList li {
+    background-color: #0f3460;
+    color: #e0e0e0;
+    box-shadow: 3px -3px 8px rgba(0,0,0,0.5);
+}
+
+body.dark .options button:active {
+    background-color: #1a4a7a;
+}
+
+body.dark .kanjiList li.active {
+    background-color: #2d6a4f;
+}
+
+body.dark .kanjiList li.wrong {
+    background-color: #9d0208;
+}
+
 .kanji {
     width: 100%;
-    max-width: 200px;
-    height: 150px;
-    font-size: 100px;
+    max-width: 400px;
+    height: 280px;
+    font-size: 200px;
     background-color: #f5f5f5;
     margin-bottom: 20px;
     padding: 10px;
@@ -46,16 +110,16 @@ body {
 }
 
 .options {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     gap: 10px;
     width: 100%;
-    max-width: 300px;
+    max-width: 600px;
 }
 
 .options button {
-    padding: 15px 20px;
-    font-size: 18px;
+    padding: 15px 10px;
+    font-size: 16px;
     border-radius: 10px;
     cursor: pointer;
     border: none;
@@ -107,9 +171,13 @@ body {
         height: 120px;
     }
     
+    .options {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
     .options button {
-        font-size: 16px;
-        padding: 12px 15px;
+        font-size: 14px;
+        padding: 12px 8px;
     }
     
     .kanjiList li {

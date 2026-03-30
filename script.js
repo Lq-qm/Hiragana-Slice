@@ -49,6 +49,66 @@ let kanjis = [
 ]; 
 
 let currentKanjiIndex = 0;
+let difficulty = 'normal';
+
+document.getElementById('difficulty').addEventListener('change', (e) => {
+    difficulty = e.target.value;
+});
+
+document.getElementById('themeBtn').addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+    const btn = document.getElementById('themeBtn');
+    btn.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
+});
+
+function getNextIndex() {
+    if (difficulty === 'random') {
+        return Math.floor(Math.random() * kanjis.length);
+    }
+    return (currentKanjiIndex + 1) % kanjis.length;
+}
+
+function playCorrectSound() {
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator1 = audioCtx.createOscillator();
+    const oscillator2 = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+    
+    oscillator1.connect(gainNode);
+    oscillator2.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+    
+    oscillator1.type = 'sine';
+    oscillator2.type = 'sine';
+    oscillator1.frequency.setValueAtTime(660, audioCtx.currentTime);
+    oscillator1.frequency.setValueAtTime(880, audioCtx.currentTime + 0.08);
+    oscillator2.frequency.setValueAtTime(880, audioCtx.currentTime);
+    
+    gainNode.gain.setValueAtTime(0.12, audioCtx.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+    
+    oscillator1.start(audioCtx.currentTime);
+    oscillator2.start(audioCtx.currentTime);
+    oscillator1.stop(audioCtx.currentTime + 0.3);
+    oscillator2.stop(audioCtx.currentTime + 0.3);
+}
+
+function playWrongSound() {
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+    
+    oscillator.type = 'sine';
+    oscillator.frequency.setValueAtTime(300, audioCtx.currentTime);
+    gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+    
+    oscillator.start(audioCtx.currentTime);
+    oscillator.stop(audioCtx.currentTime + 0.2);
+}
 
 function displayKanji() {
     const kanjiDisplay = document.getElementById("kanjiDisplay");
@@ -86,11 +146,13 @@ function checkAnswer(option) {
 
     if (isCorrect) {
         kanjiItem.classList.add("active");
+        playCorrectSound();
     } else {
         kanjiItem.classList.add("wrong");
+        playWrongSound();
     }
 
-    currentKanjiIndex = (currentKanjiIndex + 1) % kanjis.length;
+    currentKanjiIndex = getNextIndex();
     displayKanji();
     displayOptions(); 
 }

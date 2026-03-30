@@ -8,7 +8,16 @@
 </head>
 <body>
     <div class="container">
-        <div class="quiz">
+        <div class="header">
+            <div class="difficulty">
+                <label>Dificuldade:</label>
+                <select id="difficulty">
+                    <option value="normal">Normal</option>
+                    <option value="random">Aleatório</option>
+                </select>
+            </div>
+            <button id="themeBtn" class="theme-btn" title="Alternar tema">🌙</button>
+        </div>
             <div class="kanji" id="kanjiDisplay"></div>
 	    <div class="options" id="options"></div> 
             <div class="kanjiList">

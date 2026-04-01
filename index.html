@@ -3,28 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hiragana</title>
+    <title>Hiragana Slice</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <div class="difficulty">
-                <label>Dificuldade:</label>
-                <select id="difficulty">
-                    <option value="normal">Normal</option>
-                    <option value="random">Aleatório</option>
-                </select>
+            <button id="difficultyBtn" class="difficulty-btn" title="Alternar dificuldade">Normal</button>
+            <div class="score-bar">
+                <div class="score-item correct">
+                    <span class="score-icon">✓</span>
+                    <span id="correctCount">0</span>
+                </div>
+                <div class="score-total">
+                    <span id="scoreDisplay">0</span>
+                </div>
+                <div class="score-item wrong">
+                    <span class="score-icon">✗</span>
+                    <span id="wrongCount">0</span>
+                </div>
             </div>
             <button id="themeBtn" class="theme-btn" title="Alternar tema">🌙</button>
         </div>
             <div class="kanji" id="kanjiDisplay"></div>
-	    <div class="options" id="options"></div> 
+	    <div class="options" id="options"></div>
             <div class="kanjiList">
             <ul id="kanjiList"></ul>
 	    </div>
 	</div>
-    </div> 
+    </div>
     <script src="script.js"></script>
 </body>
 </html>

@@ -50,9 +50,31 @@ let kanjis = [
 
 let currentKanjiIndex = 0;
 let difficulty = 'normal';
+let audioContext = null;
+let correctCount = parseInt(localStorage.getItem('hiragana_correct')) || 0;
+let wrongCount = parseInt(localStorage.getItem('hiragana_wrong')) || 0;
 
-document.getElementById('difficulty').addEventListener('change', (e) => {
-    difficulty = e.target.value;
+function updateScoreDisplay() {
+    document.getElementById('correctCount').textContent = correctCount;
+    document.getElementById('wrongCount').textContent = wrongCount;
+    document.getElementById('scoreDisplay').textContent = correctCount - wrongCount;
+}
+
+function saveScore() {
+    localStorage.setItem('hiragana_correct', correctCount);
+    localStorage.setItem('hiragana_wrong', wrongCount);
+}
+
+function getAudioContext() {
+    if (!audioContext) {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    return audioContext;
+}
+
+document.getElementById('difficultyBtn').addEventListener('click', () => {
+    difficulty = difficulty === 'normal' ? 'random' : 'normal';
+    document.getElementById('difficultyBtn').textContent = difficulty === 'normal' ? 'Normal' : 'Difícil';
 });
 
 document.getElementById('themeBtn').addEventListener('click', () => {
@@ -60,6 +82,12 @@ document.getElementById('themeBtn').addEventListener('click', () => {
     const btn = document.getElementById('themeBtn');
     btn.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
 });
+
+document.addEventListener('click', () => {
+    if (audioContext && audioContext.state === 'suspended') {
+        audioContext.resume();
+    }
+}, { once: true });
 
 function getNextIndex() {
     if (difficulty === 'random') {
@@ -69,49 +97,55 @@ function getNextIndex() {
 }
 
 function playCorrectSound() {
-    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    const oscillator1 = audioCtx.createOscillator();
-    const oscillator2 = audioCtx.createOscillator();
-    const gainNode = audioCtx.createGain();
+    const audioCtx = getAudioContext();
+    const osc1 = audioCtx.createOscillator();
+    const osc2 = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
     
-    oscillator1.connect(gainNode);
-    oscillator2.connect(gainNode);
-    gainNode.connect(audioCtx.destination);
+    osc1.connect(gain);
+    osc2.connect(gain);
+    gain.connect(audioCtx.destination);
     
-    oscillator1.type = 'sine';
-    oscillator2.type = 'sine';
-    oscillator1.frequency.setValueAtTime(660, audioCtx.currentTime);
-    oscillator1.frequency.setValueAtTime(880, audioCtx.currentTime + 0.08);
-    oscillator2.frequency.setValueAtTime(880, audioCtx.currentTime);
+    osc1.type = 'triangle';
+    osc2.type = 'sine';
+    osc1.frequency.setValueAtTime(523, audioCtx.currentTime);
+    osc1.frequency.setValueAtTime(659, audioCtx.currentTime + 0.05);
+    osc1.frequency.setValueAtTime(784, audioCtx.currentTime + 0.1);
+    osc2.frequency.setValueAtTime(1047, audioCtx.currentTime + 0.05);
     
-    gainNode.gain.setValueAtTime(0.12, audioCtx.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+    gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
     
-    oscillator1.start(audioCtx.currentTime);
-    oscillator2.start(audioCtx.currentTime);
-    oscillator1.stop(audioCtx.currentTime + 0.3);
-    oscillator2.stop(audioCtx.currentTime + 0.3);
+    osc1.start(audioCtx.currentTime);
+    osc2.start(audioCtx.currentTime + 0.05);
+    osc1.stop(audioCtx.currentTime + 0.15);
+    osc2.stop(audioCtx.currentTime + 0.2);
 }
 
 function playWrongSound() {
-    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    const oscillator = audioCtx.createOscillator();
-    const gainNode = audioCtx.createGain();
+    const audioCtx = getAudioContext();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
     
-    oscillator.connect(gainNode);
-    gainNode.connect(audioCtx.destination);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
     
-    oscillator.type = 'sine';
-    oscillator.frequency.setValueAtTime(300, audioCtx.currentTime);
-    gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(311, audioCtx.currentTime);
+    osc.frequency.setValueAtTime(277, audioCtx.currentTime + 0.1);
     
-    oscillator.start(audioCtx.currentTime);
-    oscillator.stop(audioCtx.currentTime + 0.2);
+    gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+    
+    osc.start(audioCtx.currentTime);
+    osc.stop(audioCtx.currentTime + 0.2);
 }
 
 function displayKanji() {
     const kanjiDisplay = document.getElementById("kanjiDisplay");
+    kanjiDisplay.style.animation = 'none';
+    kanjiDisplay.offsetHeight;
+    kanjiDisplay.style.animation = 'bounceIn 0.4s ease-out';
     kanjiDisplay.innerText = kanjis[currentKanjiIndex].kanji;
 }
 
@@ -147,11 +181,15 @@ function checkAnswer(option) {
     if (isCorrect) {
         kanjiItem.classList.add("active");
         playCorrectSound();
+        correctCount++;
     } else {
         kanjiItem.classList.add("wrong");
         playWrongSound();
+        wrongCount++;
     }
 
+    updateScoreDisplay();
+    saveScore();
     currentKanjiIndex = getNextIndex();
     displayKanji();
     displayOptions(); 
@@ -173,3 +211,4 @@ function createKanjiList() {
 createKanjiList();
 displayKanji();
 displayOptions();
+updateScoreDisplay();

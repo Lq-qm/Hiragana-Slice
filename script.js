@@ -49,10 +49,12 @@ let kanjis = [
 ]; 
 
 let currentKanjiIndex = 0;
-let difficulty = 'normal';
+let difficulty = localStorage.getItem('hiragana_difficulty') || 'normal';
 let audioContext = null;
 let correctCount = parseInt(localStorage.getItem('hiragana_correct')) || 0;
 let wrongCount = parseInt(localStorage.getItem('hiragana_wrong')) || 0;
+
+document.getElementById('difficultyBtn').textContent = difficulty === 'normal' ? 'Normal' : 'Difícil';
 
 function updateScoreDisplay() {
     document.getElementById('correctCount').textContent = correctCount;
@@ -75,12 +77,45 @@ function getAudioContext() {
 document.getElementById('difficultyBtn').addEventListener('click', () => {
     difficulty = difficulty === 'normal' ? 'random' : 'normal';
     document.getElementById('difficultyBtn').textContent = difficulty === 'normal' ? 'Normal' : 'Difícil';
+    localStorage.setItem('hiragana_difficulty', difficulty);
 });
 
 document.getElementById('themeBtn').addEventListener('click', () => {
     document.body.classList.toggle('dark');
     const btn = document.getElementById('themeBtn');
     btn.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
+});
+
+document.getElementById('resetBtn').addEventListener('click', () => {
+    correctCount = 0;
+    wrongCount = 0;
+    updateScoreDisplay();
+    saveScore();
+    currentKanjiIndex = 0;
+    displayKanji();
+    displayOptions();
+    resetKanjiList();
+});
+
+document.getElementById('difficultyBtn').addEventListener('click', () => {
+    if (difficulty === 'normal') {
+        difficulty = 'random';
+        document.getElementById('difficultyBtn').textContent = 'Difícil';
+    } else {
+        difficulty = 'normal';
+        document.getElementById('difficultyBtn').textContent = 'Normal';
+    }
+    localStorage.setItem('hiragana_difficulty', difficulty);
+    if (difficulty === 'normal') {
+        correctCount = 0;
+        wrongCount = 0;
+        updateScoreDisplay();
+        saveScore();
+        currentKanjiIndex = 0;
+        displayKanji();
+        displayOptions();
+        resetKanjiList();
+    }
 });
 
 document.addEventListener('click', () => {
@@ -186,6 +221,10 @@ function checkAnswer(option) {
         kanjiItem.classList.add("wrong");
         playWrongSound();
         wrongCount++;
+        
+        if (difficulty === 'random') {
+            resetKanjiList();
+        }
     }
 
     updateScoreDisplay();
@@ -208,6 +247,14 @@ function createKanjiList() {
         kanjiList.appendChild(listItem);
     });
 }
+
+function resetKanjiList() {
+    const kanjiList = document.getElementById("kanjiList");
+    Array.from(kanjiList.children).forEach(item => {
+        item.classList.remove("active", "wrong");
+    });
+}
+
 createKanjiList();
 displayKanji();
 displayOptions();

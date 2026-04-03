@@ -36,6 +36,48 @@ body {
     align-items: center;
 }
 
+.score-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 15px;
+    background: linear-gradient(180deg, #f5f5f5 0%, #e8e8e8 100%);
+    border-radius: 10px;
+    box-shadow: 0 3px 0 #bbb;
+}
+
+.score-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-size: 15px;
+    font-weight: 700;
+    min-width: 30px;
+}
+
+.score-item.correct {
+    color: #55a555;
+}
+
+.score-item.wrong {
+    color: #b05555;
+}
+
+.score-icon {
+    font-size: 16px;
+}
+
+.score-total {
+    font-size: 20px;
+    font-weight: 700;
+    color: #4a4a4a;
+    padding: 0 12px;
+    border-left: 2px solid #ccc;
+    border-right: 2px solid #ccc;
+}
+
 .header {
     display: flex;
     justify-content: space-between;
@@ -91,83 +133,36 @@ body {
     background: rgba(0,0,0,0.1);
 }
 
-.score-bar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-    padding: 8px 15px;
-    background: linear-gradient(180deg, #f5f5f5 0%, #e8e8e8 100%);
-    border-radius: 10px;
-    box-shadow: 0 3px 0 #bbb;
-    height: 40px;
-}
-
-.score-item {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-    font-size: 15px;
-    font-weight: 700;
-    min-width: 30px;
-    height: 100%;
-}
-
-.score-item.correct {
-    color: #55a555;
-}
-
-.score-item.wrong {
-    color: #b05555;
-}
-
-.score-icon {
-    font-size: 16px;
-}
-
-.score-total {
-    font-size: 20px;
-    font-weight: 700;
-    color: #4a4a4a;
-    padding: 0 12px;
-    border-left: 2px solid #ccc;
-    border-right: 2px solid #ccc;
-}
-
-body.dark {
-    background-color: #1a1a2e;
-}
-
-body.dark .container {
-    background: #1a1a2a;
+.reset-btn {
+    font-size: 18px;
+    font-weight: 600;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: linear-gradient(180deg, #fafafa 0%, #f0f0f0 100%);
     box-shadow: 
-        0 6px 0 #0a0a12,
-        0 8px 16px rgba(0,0,0,0.3),
-        0 16px 32px rgba(0,0,0,0.25),
-        0 24px 48px rgba(0,0,0,0.2);
-    border-bottom: 6px solid #0a0a12;
-    border-right: 6px solid #0a0a12;
+        0 4px 0 #bbb,
+        0 6px 10px rgba(0,0,0,0.15);
+    transition: all 0.1s ease;
 }
 
-body.dark .difficulty-btn,
-body.dark .theme-btn {
-    background: linear-gradient(180deg, #353548 0%, #282838 100%);
-    color: #c0c0c8;
+.reset-btn:hover {
+    background: linear-gradient(180deg, #ffffff 0%, #f5f5f5 100%);
+    transform: translateY(-1px);
     box-shadow: 
-        0 4px 0 #1a1a28,
-        0 6px 10px rgba(0,0,0,0.25);
+        0 5px 0 #bbb,
+        0 8px 12px rgba(0,0,0,0.18);
 }
 
-body.dark .difficulty-btn:hover,
-body.dark .theme-btn:hover {
-    background: linear-gradient(180deg, #424255 0%, #353545 100%);
+.reset-btn:active {
+    transform: translateY(2px);
     box-shadow: 
-        0 5px 0 #1a1a28,
-        0 8px 12px rgba(0,0,0,0.3);
+        0 1px 0 #bbb,
+        0 3px 6px rgba(0,0,0,0.12);
 }
 
-body.dark .score-bar {
+body.dark .reset-btn {
     background: linear-gradient(180deg, #353548 0%, #282838 100%);
     box-shadow: 0 3px 0 #1a1a28;
 }
@@ -186,298 +181,7 @@ body.dark .score-total {
     border-right: 2px solid #444;
 }
 
-body.dark .kanji {
-    background: linear-gradient(180deg, #3d3d52 0%, #2d2d42 100%);
-    color: #e0e0e0;
-    box-shadow: 
-        0 8px 0 #1a1a28,
-        0 12px 20px rgba(0,0,0,0.35),
-        0 20px 35px rgba(0,0,0,0.25);
-}
-
-body.dark .options button {
-    background: linear-gradient(180deg, #3d3d52 0%, #2d2d42 100%);
-    color: #c8c8d0;
-    font-weight: 700;
-    box-shadow:
-        0 5px 0 #22222f,
-        0 8px 15px rgba(0,0,0,0.3),
-        0 12px 25px rgba(0,0,0,0.2);
-}
-
-body.dark .options button:hover {
-    background: linear-gradient(180deg, #4a4a5f 0%, #3a3a4f 100%);
-    transform: translateY(-1px);
-    box-shadow: 
-        0 6px 0 #22222f,
-        0 10px 18px rgba(0,0,0,0.35),
-        0 15px 30px rgba(0,0,0,0.25);
-}
-
-body.dark .options button:active {
-    transform: translateY(4px);
-    box-shadow: 
-        0 2px 0 #22222f,
-        0 4px 8px rgba(0,0,0,0.25);
-}
-
-body.dark .kanjiList li.active {
-    background: linear-gradient(180deg, #6bb86b 0%, #55a555 100%);
-    box-shadow: 
-        0 4px 0 #4a8a4a,
-        0 6px 10px rgba(0,0,0,0.25),
-        0 10px 18px rgba(85,165,85,0.2);
-}
-
-body.dark .kanjiList li.wrong {
-    background: linear-gradient(180deg, #c56b6b 0%, #b05555 100%);
-    box-shadow: 
-        0 4px 0 #a04a4a,
-        0 6px 10px rgba(0,0,0,0.25),
-        0 10px 18px rgba(176,85,85,0.2);
-}
-
-body.dark .kanjiList li:hover {
-    background: linear-gradient(180deg, #424255 0%, #353545 100%);
-    transform: translateY(-2px);
-    box-shadow: 
-        0 6px 0 #1a1a28,
-        0 10px 15px rgba(0,0,0,0.35),
-        0 15px 25px rgba(0,0,0,0.25);
-}
-
-body.dark .kanjiList li {
-    background: linear-gradient(180deg, #353548 0%, #282838 100%);
-    color: #c0c0c8;
-    box-shadow: 
-        0 4px 0 #1a1a28,
-        0 6px 10px rgba(0,0,0,0.3),
-        0 10px 18px rgba(0,0,0,0.2);
-}
-
-.kanji {
-    width: 280px;
-    height: 280px;
-    font-size: 180px;
-    font-weight: 700;
-    background-color: #f5f5f5;
-    margin: 0 auto 20px;
-    padding: 10px;
-    text-align: center;
-    border-radius: 20px;
-    box-shadow: 
-        0 8px 0 #bbb,
-        0 12px 20px rgba(0,0,0,0.18),
-        0 20px 35px rgba(0,0,0,0.12);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    animation: bounceIn 0.4s ease-out;
-}
-
-@keyframes bounceIn {
-    0% {
-        transform: scale(0.8);
-        opacity: 0.5;
-    }
-    50% {
-        transform: scale(1.05);
-    }
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
-}
-
-.options {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.options button {
-    padding: 15px 10px;
-    font-size: 18px;
-    border-radius: 12px;
-    cursor: pointer;
-    border: none;
-    background: linear-gradient(180deg, #f8f8f8 0%, #e8e8e8 100%);
-    color: #4a4a4a;
-    font-weight: 700;
-    box-shadow: 
-        0 5px 0 #c5c5c5,
-        0 8px 15px rgba(0,0,0,0.12),
-        0 12px 25px rgba(0,0,0,0.08);
-    transition: all 0.1s ease;
-    position: relative;
-}
-
-.options button:hover {
-    background: linear-gradient(180deg, #ffffff 0%, #f0f0f0 100%);
-    transform: translateY(-1px);
-    box-shadow: 
-        0 6px 0 #c5c5c5,
-        0 10px 18px rgba(0,0,0,0.14),
-        0 15px 30px rgba(0,0,0,0.1);
-}
-
-.options button:active {
-    transform: translateY(4px);
-    box-shadow: 
-        0 2px 0 #c5c5c5,
-        0 4px 8px rgba(0,0,0,0.1);
-}
-
-.kanjiList {
-    margin-top: 30px;
-    width: 100%;
-}
-
-.kanjiList ul {
-    list-style-type: none;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 5px;
-}
-
-.kanjiList li {
-    font-size: 18px;
-    font-weight: 600;
-    border-radius: 10px;
-    background: linear-gradient(180deg, #f5f5f5 0%, #e5e5e5 100%);
-    box-shadow: 
-        0 4px 0 #bbb,
-        0 6px 10px rgba(0,0,0,0.08),
-        0 10px 18px rgba(0,0,0,0.05);
-    padding: 8px 14px;
-    cursor: pointer;
-    user-select: none;
-    transition: all 0.15s ease;
-}
-
-.kanjiList li:hover {
-    background: linear-gradient(180deg, #fafafa 0%, #ebebeb 100%);
-    transform: translateY(-2px);
-    box-shadow: 
-        0 6px 0 #bbb,
-        0 10px 15px rgba(0,0,0,0.1),
-        0 15px 25px rgba(0,0,0,0.06);
-}
-
-.kanjiList li:active {
-    transform: translateY(2px);
-    box-shadow: 
-        0 2px 0 #bbb,
-        0 4px 6px rgba(0,0,0,0.06);
-}
-
-.kanjiList li.active {
-    background: linear-gradient(180deg, #6bb86b 0%, #55a555 100%);
-    color: white;
-    box-shadow: 
-        0 4px 0 #4a8a4a,
-        0 6px 10px rgba(0,0,0,0.12),
-        0 10px 18px rgba(85,165,85,0.25);
-}
-
-.kanjiList li.wrong {
-    background: linear-gradient(180deg, #c56b6b 0%, #b05555 100%);
-    color: white;
-    box-shadow: 
-        0 4px 0 #a04a4a,
-        0 6px 10px rgba(0,0,0,0.12),
-        0 10px 18px rgba(176,85,85,0.25);
-}
-
-@media (max-width: 480px) {
-    .header {
-        flex-wrap: nowrap;
-        justify-content: center;
-        gap: 6px;
-    }
-    
-    .difficulty-btn,
-    .theme-btn {
-        padding: 6px 8px;
-        font-size: 11px;
-    }
-    
-    .score-bar {
-        gap: 8px;
-        padding: 6px 10px;
-    }
-    
-    .score-item {
-        font-size: 13px;
-    }
-    
-    .score-icon {
-        font-size: 14px;
-    }
-    
-    .score-total {
-        font-size: 16px;
-        padding: 0 8px;
-    }
-    
-    .kanji {
-        font-size: 80px;
-        height: 120px;
-    }
-    
-    .options {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .options button {
-        font-size: 14px;
-        padding: 12px 8px;
-    }
-    
-    .kanjiList li {
-        font-size: 16px;
-        padding: 6px 10px;
-    }
-}
-
-.difficulty-btn,
-.theme-btn {
-    font-size: 14px;
-    font-weight: 600;
-    padding: 8px 14px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    background: linear-gradient(180deg, #fafafa 0%, #f0f0f0 100%);
-    box-shadow: 
-        0 4px 0 #bbb,
-        0 6px 10px rgba(0,0,0,0.15);
-    transition: all 0.1s ease;
-}
-
-.difficulty-btn:hover,
-.theme-btn:hover {
-    background: linear-gradient(180deg, #ffffff 0%, #f5f5f5 100%);
-    transform: translateY(-1px);
-    box-shadow: 
-        0 5px 0 #bbb,
-        0 8px 12px rgba(0,0,0,0.18);
-}
-
-.difficulty-btn:active,
-.theme-btn:active {
-    transform: translateY(2px);
-    box-shadow: 
-        0 1px 0 #bbb,
-        0 3px 6px rgba(0,0,0,0.12);
-}
-
-body.dark .difficulty-btn,
-body.dark .theme-btn {
+body.dark .reset-btn {
     background: linear-gradient(180deg, #353548 0%, #282838 100%);
     color: #c0c0c8;
     box-shadow: 
@@ -485,25 +189,11 @@ body.dark .theme-btn {
         0 6px 10px rgba(0,0,0,0.25);
 }
 
-body.dark .difficulty-btn:hover,
-body.dark .theme-btn:hover {
+body.dark .reset-btn:hover {
     background: linear-gradient(180deg, #424255 0%, #353545 100%);
     box-shadow: 
         0 5px 0 #1a1a28,
         0 8px 12px rgba(0,0,0,0.3);
-}
-
-.theme-btn {
-    font-size: 20px;
-    padding: 8px 12px;
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    border-radius: 8px;
-}
-
-.theme-btn:hover {
-    background: rgba(0,0,0,0.1);
 }
 
 body.dark {
